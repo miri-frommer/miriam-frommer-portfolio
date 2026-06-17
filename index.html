@@ -1,471 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio – Miram Frommer</title>
+  <title>Portfolio â€“ Miram Frommer</title>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.6/pannellum.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.6/pannellum.js"></script>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --cream: #fdf8f2;
-      --blush: #f5c9c0;
-      --sage:  #b5c9b7;
-      --lilac: #d4c5e8;
-      --butter:#f7e6a2;
-      --ink:   #2a2320;
-      --muted: #8c7e78;
-      --card:  #ffffff;
-      --radius: 24px;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--cream);
-      color: var(--ink);
-      overflow-x: hidden;
-    }
-
-    /* ─── CURSOR ─── */
-    @media (pointer: fine) {
-      body { cursor: none; }
-      #cursor, #cursor-trail { display: block; }
-    }
-    @media (pointer: coarse) {
-      body { cursor: auto; }
-      #cursor, #cursor-trail { display: none; }
-    }
-    #cursor {
-      width: 12px; height: 12px;
-      background: var(--blush);
-      border-radius: 50%;
-      position: fixed; top: 0; left: 0;
-      pointer-events: none;
-      z-index: 9999;
-      transition: background 0.2s;
-    }
-    #cursor-trail {
-      width: 32px; height: 32px;
-      border: 2px solid var(--blush);
-      border-radius: 50%;
-      position: fixed; top: 0; left: 0;
-      pointer-events: none;
-      z-index: 9998;
-      transition: transform 0.35s ease, opacity 0.2s;
-      opacity: 0.5;
-    }
-
-    /* ─── NAV ─── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1.2rem 3rem;
-      backdrop-filter: blur(12px);
-      background: rgba(253,248,242,0.85);
-      border-bottom: 1px solid rgba(42,35,32,0.06);
-    }
-    .nav-logo {
-      font-family: 'Fraunces', serif;
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: var(--ink);
-      text-decoration: none;
-      letter-spacing: -0.02em;
-    }
-    .nav-logo span { color: var(--blush); }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a {
-      font-size: 0.88rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      text-decoration: none;
-      color: var(--muted);
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--ink); }
-
-    /* ─── HERO ─── */
-    #hero {
-      min-height: 100vh;
-      display: flex; align-items: center;
-      padding: 8rem 3rem 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-blobs {
-      position: absolute; inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .blob {
-      position: absolute;
-      border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
-      opacity: 0.55;
-      animation: blobFloat 8s ease-in-out infinite;
-    }
-    .blob-1 { width: 420px; height: 420px; background: var(--blush);  top: -80px;  right: -60px; animation-delay: 0s; }
-    .blob-2 { width: 300px; height: 300px; background: var(--sage);   bottom: 40px; right: 200px; animation-delay: -3s; }
-    .blob-3 { width: 240px; height: 240px; background: var(--butter); top: 60px;   right: 260px; animation-delay: -5s; }
-    .blob-4 { width: 180px; height: 180px; background: var(--lilac);  bottom: -40px; right: 80px; animation-delay: -2s; }
-    @keyframes blobFloat {
-      0%,100% { border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; transform: translateY(0); }
-      50%      { border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%; transform: translateY(-18px); }
-    }
-
-    .hero-content { position: relative; z-index: 1; max-width: 680px; }
-    h1 {
-      font-family: 'Fraunces', serif;
-      font-size: clamp(3rem, 7vw, 5.5rem);
-      line-height: 1.05;
-      font-weight: 600;
-      letter-spacing: -0.03em;
-      opacity: 0;
-      animation: fadeUp 0.7s 0.4s forwards;
-    }
-    h1 em { font-style: italic; font-weight: 300; color: var(--muted); }
-    .hero-sub {
-      margin-top: 1.5rem;
-      font-size: 1.05rem;
-      line-height: 1.7;
-      color: var(--muted);
-      max-width: 480px;
-      opacity: 0;
-      animation: fadeUp 0.7s 0.6s forwards;
-    }
-    .hero-cta {
-      margin-top: 2.5rem;
-      display: flex; gap: 1rem; flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp 0.7s 0.8s forwards;
-    }
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.85rem 1.8rem;
-      border-radius: 100px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      text-decoration: none;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .btn:hover { transform: translateY(-2px); }
-    .btn-primary { background: var(--ink); color: var(--cream); box-shadow: 0 4px 20px rgba(42,35,32,0.18); }
-    .btn-primary:hover { box-shadow: 0 8px 28px rgba(42,35,32,0.25); }
-    .btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid rgba(42,35,32,0.2); }
-    .btn-ghost:hover { border-color: var(--ink); }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ─── SECTIONS ─── */
-    section { padding: 6rem 3rem; }
-    .section-label {
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.6rem;
-    }
-    h2 {
-      font-family: 'Fraunces', serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 600;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-    }
-
-    /* ─── ABOUT ─── */
-    #about { background: white; }
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .about-text h2 { margin-bottom: 1.5rem; }
-    .about-text p { color: var(--muted); line-height: 1.8; font-size: 1rem; margin-bottom: 1rem; }
-    .about-visual { position: relative; }
-    .about-card { background: var(--cream); border-radius: var(--radius); padding: 2.5rem; text-align: center; position: relative; overflow: hidden; }
-    .about-avatar {
-      width: 140px; height: 140px;
-      border-radius: 50%;
-      background: transparent;
-      margin: 0 auto 1.5rem;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 4rem;
-    }
-    .about-name { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 600; }
-    .about-role { color: var(--muted); font-size: 0.9rem; margin-top: 0.3rem; }
-    .about-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-top: 1.2rem; }
-    .tag { padding: 0.3rem 0.9rem; border-radius: 100px; font-size: 0.78rem; font-weight: 500; }
-    .tag-blush  { background: var(--blush);  color: #6b3a34; }
-    .tag-sage   { background: var(--sage);   color: #2d4a30; }
-    .tag-lilac  { background: var(--lilac);  color: #4a3669; }
-    .tag-butter { background: var(--butter); color: #5a4a1a; }
-
-    /* ─── PORTFOLIO ─── */
-    #portfolio { background: var(--cream); }
-    .portfolio-header { max-width: 900px; margin: 0 auto 4rem; text-align: left; }
-    .portfolio-list { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.5rem; }
-    .project-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
-      background: white;
-      border-radius: var(--radius);
-      padding: 2.5rem;
-      transition: box-shadow 0.3s, transform 0.3s;
-    }
-    .project-row:hover { box-shadow: 0 12px 40px rgba(42,35,32,0.08); transform: translateY(-3px); }
-    .project-row.reverse > .project-thumb { order: -1; }
-    .project-row.reverse { direction: ltr; }
-    .project-thumb {
-      border-radius: 18px;
-      aspect-ratio: 16 / 9;
-      height: auto;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 4rem;
-      overflow: hidden;
-      position: relative;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .project-thumb:hover { transform: scale(1.03); box-shadow: 0 8px 30px rgba(42,35,32,0.12); }
-    .project-thumb .zoom-hint {
-      position: absolute;
-      bottom: 0.7rem; right: 0.9rem;
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      color: rgba(42,35,32,0.45);
-      opacity: 0;
-      transition: opacity 0.2s;
-      pointer-events: none;
-    }
-    .project-thumb:hover .zoom-hint { opacity: 1; }
-    .thumb-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .project-cat { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
-    .project-title { font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 0.8rem; }
-    .project-desc { color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
-    .project-link { display: none; }
-
-    /* ─── LIGHTBOX ─── */
-    #lightbox {
-      display: none;
-      position: fixed; inset: 0;
-      z-index: 500;
-      align-items: center;
-      justify-content: center;
-    }
-    #lightbox.open { display: flex; }
-    #lightbox-backdrop {
-      position: absolute; inset: 0;
-      background: rgba(42,35,32,0.55);
-      backdrop-filter: blur(6px);
-      animation: fadeIn 0.25s ease;
-    }
-    #lightbox-box {
-      position: relative;
-      z-index: 1;
-      background: white;
-      border-radius: var(--radius);
-      padding: 0;
-      max-width: 92vw;
-      width: 92vw;
-      max-height: 92vh;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 32px 80px rgba(42,35,32,0.2);
-      animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
-    }
-
-    /* ─── Close-Button: immer oben rechts, fixed im Popup ─── */
-    #lightbox-close {
-      position: fixed;
-      top: calc(4vh + 1rem);
-      right: calc(4vw + 1rem);
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      background: white;
-      border: none;
-      font-size: 1.1rem;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-      color: var(--ink);
-      box-shadow: 0 2px 10px rgba(42,35,32,0.2);
-      z-index: 600;
-    }
-    #lightbox-close:hover { background: var(--blush); transform: scale(1.1); }
-
-    #lightbox-thumb {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      padding: 1.2rem;
-      box-sizing: border-box;
-      height: auto;
-      min-height: unset;
-      border-radius: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 8rem;
-    }
-    #lightbox-info {
-      padding: 1.8rem 2.2rem 2.2rem;
-      display: flex;
-      flex-direction: column;
-      text-align: left;
-      border-top: 1px solid rgba(42,35,32,0.07);
-    }
-    #lightbox-cat { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
-    #lightbox-title { font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 0.8rem; }
-    #lightbox-desc { 
-      color: var(--muted); 
-      font-size: 0.95rem; 
-      line-height: 1.7;
-      width: 100%; 
-      max-width: 700px;}
-      #lightbox-desc p {
-  margin-bottom: 0.6rem;
-}
-#lightbox-desc p:last-child {
-  margin-bottom: 0;
-}
-
-    /* ─── Galerie: Zeilen mit je eigener Spaltenanzahl ─── */
-    #lightbox-gallery { padding: 1.2rem 0 0; display: flex; flex-direction: column; gap: 0.8rem; }
-    .gallery-row { display: grid; gap: 0.8rem; }
-    .gallery-row.cols-1 { grid-template-columns: 1fr; }
-    .gallery-row.cols-2 { grid-template-columns: 1fr 1fr; }
-    .gallery-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
-    #lightbox-gallery img { width: 100%; height: auto; object-fit: cover; border-radius: 10px; display: block; }
-
-    /* ─── Inline-Panorama in der Galerie ─── */
-    .gallery-panorama-row {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      border-radius: 12px;
-      overflow: hidden;
-      position: relative;
-    }
-    .gallery-text {
-  font-size: 0.95rem;
-  color: var(--muted);
-  line-height: 1.7;
-  padding: 0.4rem 0;
-  margin-top: 0.8rem;
-  max-width: 700px;
-}
-    .gallery-panorama-hint {
-      font-size: 0.72rem;
-      color: var(--muted);
-      margin-top: 0.4rem;
-    }
-
-    /* ─── PANORAMA im Lightbox ─── */
-    #lightbox-panorama {
-      display: none;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      padding: 1.2rem;
-      box-sizing: border-box;
-    }
-    #lightbox-panorama.active { display: block; }
-    #panorama-viewer { width: 100%; height: 100%; border-radius: 12px; overflow: hidden; }
-    .panorama-hint {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-top: 0.6rem;
-      padding: 0 2.2rem;
-    }
-
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes popIn  { from { opacity: 0; transform: scale(0.88); } to { opacity: 1; transform: scale(1); } }
-
-    /* ─── SKILLS ─── */
-    #skills { background: white; }
-    .skills-inner { max-width: 1100px; margin: 0 auto; }
-    .skills-header { margin-bottom: 3rem; }
-    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
-    .skill-card { background: var(--cream); border-radius: var(--radius); padding: 1.8rem; }
-    .skill-icon { font-size: 2rem; margin-bottom: 0.8rem; }
-    .skill-name { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
-    .skill-items { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
-    .skill-pill { background: white; border-radius: 100px; padding: 0.25rem 0.75rem; font-size: 0.76rem; color: var(--muted); }
-    .skill-bar-wrap { margin-top: 0.8rem; }
-    .skill-bar-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.82rem; }
-    .skill-bar-bg { background: rgba(42,35,32,0.08); border-radius: 100px; height: 6px; margin-bottom: 0.8rem; overflow: hidden; }
-    .skill-bar-fill { height: 100%; border-radius: 100px; background: var(--ink); transition: width 1s ease; }
-
-    /* ─── CONTACT ─── */
-    #contact { background: var(--ink); color: white; }
-    #contact .section-label { color: rgba(255,255,255,0.4); }
-    .contact-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: start;
-    }
-    .contact-heading h2 { color: white; margin-top: 0.6rem; }
-    .contact-details { display: flex; flex-direction: column; gap: 1.8rem; padding-top: 0.4rem; }
-    .contact-detail-block { display: flex; flex-direction: column; gap: 0.25rem; }
-    .contact-detail-label { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
-    .contact-detail-value { font-size: 1rem; color: rgba(255,255,255,0.85); text-decoration: none; line-height: 1.6; }
-    a.contact-detail-value:hover { color: var(--blush); }
-    .contact-detail-link { display: inline-block; margin-right: 1rem; font-size: 1rem; color: rgba(255,255,255,0.85); text-decoration: none; transition: color 0.2s; }
-    .contact-detail-link:hover { color: var(--blush); }
-
-    /* ─── FOOTER ─── */
-    footer {
-      background: var(--ink);
-      color: rgba(255,255,255,0.3);
-      text-align: center;
-      padding: 1.5rem;
-      font-size: 0.8rem;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-
-    /* ─── SCROLL REVEAL ─── */
-    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 900px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { gap: 1.2rem; }
-      section { padding: 4rem 1.5rem; }
-      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .project-row { grid-template-columns: 1fr; gap: 1.5rem; }
-      .project-row.reverse { direction: ltr; }
-      .project-row .project-thumb { order: -1; }
-      .project-row.reverse > .project-thumb { order: -1; }
-      .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-      .gallery-row.cols-3 { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 600px) {
-      #hero { padding: 7rem 1.5rem 4rem; }
-      .nav-links { display: none; }
-      .gallery-row.cols-2,
-      .gallery-row.cols-3 { grid-template-columns: 1fr; }
-    }
-  </style>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
@@ -476,7 +18,7 @@
   <nav>
     <a href="#" class="nav-logo">miriam<span>.</span>frommer</a>
     <ul class="nav-links">
-      <li><a href="#about" data-i18n="about">Über mich</a></li>
+      <li><a href="#about" data-i18n="about">Ãœber mich</a></li>
       <li><a href="#portfolio" data-i18n="portfolio">Projekte</a></li>
       <li><a href="#skills" data-i18n="skills">Skills</a></li>
       <li><a href="#contact" data-i18n="contact">Kontakt</a></li>
@@ -494,9 +36,9 @@
     </div>
     <div class="hero-content">
       <h1 data-i18n="hero_h1">Design,<br><em>das vermittelt.</em></h1>
-      <p class="hero-sub" data-i18n="hero_sub">Ich bin eine Designerin & Illustratorin mit einer Leidenschaft für E&#8209;Learning, Character Design und visuelle Konzepte, die wirken.</p>
+      <p class="hero-sub" data-i18n="hero_sub">Ich bin eine Designerin & Illustratorin mit einer Leidenschaft fÃ¼r E&#8209;Learning, Character Design und visuelle Konzepte, die wirken.</p>
       <div class="hero-cta">
-        <a href="#portfolio" class="btn btn-primary" data-i18n="cta_portfolio">Meine Arbeiten →</a>
+        <a href="#portfolio" class="btn btn-primary" data-i18n="cta_portfolio">Meine Arbeiten â†’</a>
       </div>
     </div>
   </section>
@@ -508,7 +50,7 @@
         <div class="about-card">
           <div class="about-avatar"><img src="Bilder/profilbild.png" alt="Miriam Frommer Comic Portrait" style="width:100%; height:100%; object-fit:cover; border-radius:50%;"/></div>
           <div class="about-name">Miram Frommer</div>
-          <div class="about-role">Designerin · Illustratorin · Storytellerin</div>
+          <div class="about-role" data-i18n="about_role">Designerin Â· Illustratorin Â· Storytellerin</div>
           <div class="about-tags">
             <span class="tag tag-blush">Illustrationen</span>
             <span class="tag tag-sage">E-Learning</span>
@@ -523,10 +65,10 @@
         </div>
       </div>
       <div class="about-text reveal">
-        <p class="section-label" data-i18n="about_label">Über mich</p>
-        <h2>Hallo, ich bin<br><em style="font-family:Fraunces,serif;font-weight:300;font-style:italic">Miriam Frommer.</em></h2>
-        <p data-i18n="about_p1">Ich bringe Ideen visuell zum Leben – von verspielten Charakteren bis hin zu durchdachten Lernkonzepten. Meine Arbeit verbindet Ästhetik mit Funktion.</p>
-        <p data-i18n="about_p2">Mit Erfahrung in Grafik, Illustration und Instructional Design helfe ich Unternehmen und Kreativen, ihre Geschichten auf einzigartige Weise zu erzählen.</p>
+        <p class="section-label" data-i18n="about_label">Ãœber mich</p>
+        <h2><span data-i18n="about_heading_prefix">Hallo, ich bin</span><br><em style="font-family:Fraunces,serif;font-weight:300;font-style:italic">Miriam Frommer.</em></h2>
+        <p data-i18n="about_p1">Ich bringe Ideen visuell zum Leben â€“ von verspielten Charakteren bis hin zu durchdachten Lernkonzepten. Meine Arbeit verbindet Ã„sthetik mit Funktion.</p>
+        <p data-i18n="about_p2">Mit Erfahrung in Grafik, Illustration und Instructional Design helfe ich Unternehmen und Kreativen, ihre Geschichten auf einzigartige Weise zu erzÃ¤hlen.</p>
       </div>
     </div>
   </section>
@@ -535,7 +77,7 @@
   <section id="portfolio">
     <div class="portfolio-header reveal">
       <div>
-        <p class="section-label" data-i18n="portfolio_label">Ausgewählte Arbeiten</p>
+        <p class="section-label" data-i18n="portfolio_label">AusgewÃ¤hlte Arbeiten</p>
         <h2 data-i18n="portfolio_h2">Projekte</h2>
       </div>
     </div>
@@ -546,19 +88,19 @@
         <div class="project-info">
           <div class="project-cat" data-i18n="proj1_cat">Instructional Design</div>
           <div class="project-title" data-i18n="proj1_title">Screendesigns</div>
-          <div class="project-desc" data-i18n="proj1_desc">E-Learning Screendesigns für Firmen und Themen aller Art. Ein kurzer Überblick über meine beruflichen Schwerpunkte der letzten Jahre.</div>
+          <div class="project-desc" data-i18n="proj1_desc">E-Learning Screendesigns fÃ¼r Firmen und Themen aller Art. Ein kurzer Ãœberblick Ã¼ber meine beruflichen Schwerpunkte der letzten Jahre.</div>
         </div>
         <div class="project-thumb"
           data-cat="Instructional Design"
           data-title="Screendesigns"
-          data-desc-full="Ob E-Learning, Website oder PowerPoint: In den letzten fünf Jahren habe ich für die unterschiedlichsten Kund*innen und Themen Screendesigns entwickelt. Kein Projekt war wie das andere – genau das macht die Arbeit für mich spannend.&#10;Ich arbeite mich schnell in neue Styleguides ein, baue Design-Bibliotheken auf, recherchiere und bearbeite Bildmaterial und erstelle oder optimiere Grafiken. Aus vielen einzelnen Bausteinen entsteht so ein stimmiges Design, das Inhalte klar vermittelt und gleichzeitig gut aussieht.&#10;Dabei habe ich immer Gestaltung, Didaktik und Nutzerfreundlichkeit im Blick. Je nach Projekt übernehme ich auch konzeptionelle Aufgaben, entwickle Ideen für die Umsetzung und denke Inhalte von Anfang an mit.&#10;Häufig endet meine Arbeit nicht beim Design: Viele Trainings setze ich direkt in Autorentools als interaktive E-Learnings um oder ergänze sie durch passende Videos. Auch barrierefreie Gestaltung gehört für mich selbstverständlich dazu und ist ein Bereich, in dem ich viel Erfahrung gesammelt habe."
+          data-desc-full="Ob E-Learning, Website oder PowerPoint: In den letzten fÃ¼nf Jahren habe ich fÃ¼r die unterschiedlichsten Kund*innen und Themen Screendesigns entwickelt. Kein Projekt war wie das andere â€“ genau das macht die Arbeit fÃ¼r mich spannend.&#10;Ich arbeite mich schnell in neue Styleguides ein, baue Design-Bibliotheken auf, recherchiere und bearbeite Bildmaterial und erstelle oder optimiere Grafiken. Aus vielen einzelnen Bausteinen entsteht so ein stimmiges Design, das Inhalte klar vermittelt und gleichzeitig gut aussieht.&#10;Dabei habe ich immer Gestaltung, Didaktik und Nutzerfreundlichkeit im Blick. Je nach Projekt Ã¼bernehme ich auch konzeptionelle Aufgaben, entwickle Ideen fÃ¼r die Umsetzung und denke Inhalte von Anfang an mit.&#10;HÃ¤ufig endet meine Arbeit nicht beim Design: Viele Trainings setze ich direkt in Autorentools als interaktive E-Learnings um oder ergÃ¤nze sie durch passende Videos. Auch barrierefreie Gestaltung gehÃ¶rt fÃ¼r mich selbstverstÃ¤ndlich dazu und ist ein Bereich, in dem ich viel Erfahrung gesammelt habe."
           data-img="Bilder/screendesigns-01.jpg"
           data-en-cat="Instructional Design"
           data-en-title="Screen Designs"
-          data-en-desc-full="E-learning screen designs for companies and a variety of topics. A brief overview of my main professional focuses in recent years."
-          data-gallery="row:2|Bilder/screendesigns-03.jpg, Bilder/screendesigns-04.jpg|row:3|Bilder/screendesigns-02.jpg, Bilder/screendesigns-05.jpg,Bilder/screendesigns-06.jpg|row:2|Bilder/screendesigns-powerpoint.jpg, Bilder/screendesigns-login.png|text:Hier unten sieht man mein erstes Experiment mit einem 2D-gezeichneten 360°-Raum für ein E-learning zum Thema Geldwäsche auf einem Stand ohne Interaktionen. Viel Spaß beim Umschauen!|row:1|pano:Bilder/screendesigns-360-grad.png">
+          data-en-desc-full="Whether itâ€™s e-learning, a website, or PowerPoint, I have created screen designs for a wide range of clients and topics over the last five years. No project was like the other â€” that is what makes the work exciting for me. I quickly learn new style guides, build design libraries, research and edit imagery, and create or optimize graphics. From many small pieces, a coherent design emerges that communicates content clearly while also looking good. I always keep aesthetics, didactics and usability in mind. Depending on the project, I also take on conceptual tasks, develop ideas for implementation, and think about content from the very beginning. My work often does not stop at design: I implement many trainings directly in authoring tools as interactive e-learning or supplement them with matching videos. Accessible design is also a matter of course for me and a field in which I have gained a lot of experience."
+          data-gallery="row:2|Bilder/screendesigns-03.jpg, Bilder/screendesigns-04.jpg|row:3|Bilder/screendesigns-02.jpg, Bilder/screendesigns-05.jpg,Bilder/screendesigns-06.jpg|row:2|Bilder/screendesigns-powerpoint.jpg, Bilder/screendesigns-login.png|text:Hier unten sieht man mein erstes Experiment mit einem 2D-gezeichneten 360Â°-Raum fÃ¼r ein E-learning zum Thema GeldwÃ¤sche auf einem Stand ohne Interaktionen. Viel SpaÃŸ beim Umschauen!|row:1|pano:Bilder/screendesigns-360-grad.png">
           <img src="Bilder/screendesigns-01.jpg" class="thumb-img" alt="Screendesigns">
-          <span class="zoom-hint">Vergrößern ↗</span>
+          <span class="zoom-hint">VergrÃ¶ÃŸern â†—</span>
         </div>
       </div>
 
@@ -567,19 +109,19 @@
         <div class="project-info">
           <div class="project-cat" data-i18n="proj2_cat">Illustrationen</div>
           <div class="project-title" data-i18n="proj2_title">Character Design und Fanart</div>
-          <div class="project-desc" data-i18n="proj2_desc">Ob im E-Learning-Kontext oder privat ist egal – Charaktere gestalten macht immer Spaß. Vom Menschen über Tiere bis zum Koffer ist alles dabei.</div>
+          <div class="project-desc" data-i18n="proj2_desc">Ob im E-Learning-Kontext oder privat ist egal â€“ Charaktere gestalten macht immer SpaÃŸ. Vom Menschen Ã¼ber Tiere bis zum Koffer ist alles dabei.</div>
         </div>
         <div class="project-thumb"
           data-cat="Illustrationen"
           data-title="Character Design und Fanart"
-          data-desc-full="Charaktere zu gestalten ist für mich wahrscheinlich der schönste Teil meiner Arbeit. Umso mehr freue ich mich, dass ich das, was ich privat am liebsten mache, auch beruflich einsetzen durfte. Dabei arbeite ich gerne in ganz unterschiedlichen Stilen und habe besonders viel Spaß daran, Figuren eine eigene Persönlichkeit zu geben.&#10;Kund*innen haben oft geschätzt, dass die Avatare nicht generisch wirkten und keine austauschbaren Stock-Figuren waren. Stattdessen entstanden individuelle Charaktere, die genau zu den jeweiligen Unternehmen, Themen und Zielgruppen passten. Sie konnten vermitteln, worauf es im Arbeitsalltag ankommt, welche Fehler passieren können und wie man mit Herausforderungen umgeht. Manche waren etwas ungeschickt, zu sorglos oder machten typische Anfängerfehler – also ganz ähnlich wie wir alle. Im Laufe der Trainings entwickelten sie sich dann Schritt für Schritt zu echten Expertinnen.&#10;Die Galerie zeigt zunächst eine Auswahl von Charakteren, die ich im beruflichen Kontext entwickeln durfte. Weiter unten folgen einige private Illustrations- und Character-Design-Projekte aus den vergangenen Jahren, in denen ich neue Stile, Ideen und Figuren ausprobiert habe.&#10;Wichtig zu erwähnen: Darunter befinden sich auch einige Fanarts, die ich aus Spaß an der Freude und ohne kommerzielle Absicht erstellt habe. Sie sind alle rein privat entstanden, teilweise schon vor vielen Jahren, und wurden nie für kommerzielle Zwecke genutzt oder veröffentlicht."
+          data-desc-full="Charaktere zu gestalten ist fÃ¼r mich wahrscheinlich der schÃ¶nste Teil meiner Arbeit. Umso mehr freue ich mich, dass ich das, was ich privat am liebsten mache, auch beruflich einsetzen durfte. Dabei arbeite ich gerne in ganz unterschiedlichen Stilen und habe besonders viel SpaÃŸ daran, Figuren eine eigene PersÃ¶nlichkeit zu geben.&#10;Kund*innen haben oft geschÃ¤tzt, dass die Avatare nicht generisch wirkten und keine austauschbaren Stock-Figuren waren. Stattdessen entstanden individuelle Charaktere, die genau zu den jeweiligen Unternehmen, Themen und Zielgruppen passten. Sie konnten vermitteln, worauf es im Arbeitsalltag ankommt, welche Fehler passieren kÃ¶nnen und wie man mit Herausforderungen umgeht. Manche waren etwas ungeschickt, zu sorglos oder machten typische AnfÃ¤ngerfehler â€“ also ganz Ã¤hnlich wie wir alle. Im Laufe der Trainings entwickelten sie sich dann Schritt fÃ¼r Schritt zu echten Expertinnen.&#10;Die Galerie zeigt zunÃ¤chst eine Auswahl von Charakteren, die ich im beruflichen Kontext entwickeln durfte. Weiter unten folgen einige private Illustrations- und Character-Design-Projekte aus den vergangenen Jahren, in denen ich neue Stile, Ideen und Figuren ausprobiert habe.&#10;Wichtig zu erwÃ¤hnen: Darunter befinden sich auch einige Fanarts, die ich aus SpaÃŸ an der Freude und ohne kommerzielle Absicht erstellt habe. Sie sind alle rein privat entstanden, teilweise schon vor vielen Jahren, und wurden nie fÃ¼r kommerzielle Zwecke genutzt oder verÃ¶ffentlicht."
           data-img="Bilder/illus-avatarsammlung.jpg"
           data-en-cat="Illustrations"
           data-en-title="Character Design & Fan Art"
-          data-en-desc-full="Designing characters is one of my favorite tasks. I work in many styles and enjoy giving figures distinct personalities used in both professional and private projects."
+          data-en-desc-full="Designing characters is probably the most enjoyable part of my work. Iâ€™m especially happy that what I love to do in private can also be used professionally. I enjoy working in many different styles and especially love giving figures their own personality. Clients often appreciated that the avatars did not look generic or like interchangeable stock images. Instead, individual characters were created that matched the company, topic and audience. They could show what matters in everyday work, what mistakes can happen, and how to handle challenges. Some were a bit clumsy, too careless or made typical beginner mistakes â€” just like all of us. During trainings they then developed step by step into real experts. The gallery first shows a selection of characters I developed in a professional context. Further down are private illustration and character design projects from recent years where I tried out new styles, ideas and figures. Important to mention: there are also fanarts among them that I created for fun without commercial intent. They were produced privately, sometimes many years ago, and were never used or published for commercial purposes."
           data-gallery="row:3|Bilder/illus-illustrator.jpg, Bilder/illus-real.jpg, Bilder/illus-wilma.jpg|row:2|Bilder/illus-gross-Infografik.png, Bilder/illus-gross-teamshg.png|row:1|Bilder/illus-gross-lemon.png|text:Es folgen jetzt private Character-Designs und Fanarts:|row:3|Bilder/illus-zeichnung-09.jpg, Bilder/illus-zeichnung-04.jpg, Bilder/illus-zeichnung-07.jpg|row:3|Bilder/illus-zeichnung-12.jpg, Bilder/illus-zeichnung-11.jpg, Bilder/illus-zeichnung-01.jpg|row:3|Bilder/illus-zeichnung-10.jpg, Bilder/illus-zeichnung-02.jpg, Bilder/illus-zeichnung-08.jpg|row:3|Bilder/illus-zeichnung-05.jpg, Bilder/illus-zeichnung-03.jpg, Bilder/illus-zeichnung-13.jpg">
           <img src="Bilder/illus-avatarsammlung.jpg" class="thumb-img" alt="Character Design">
-          <span class="zoom-hint">Vergrößern ↗</span>
+          <span class="zoom-hint">VergrÃ¶ÃŸern â†—</span>
         </div>
       </div>
 
@@ -588,19 +130,19 @@
         <div class="project-info">
           <div class="project-cat" data-i18n="proj3_cat">Print</div>
           <div class="project-title" data-i18n="proj3_title">Druckpublikationen</div>
-          <div class="project-desc" data-i18n="proj3_desc">Ein paar klebrige Sticker, ein frisch gedrucktes Magazin, oder eine drei Meter hohe Messewand – Einfach schön, etwas Gestaltetes anfassen zu können.</div>
+          <div class="project-desc" data-i18n="proj3_desc">Ein paar klebrige Sticker, ein frisch gedrucktes Magazin, oder eine drei Meter hohe Messewand â€“ Einfach schÃ¶n, etwas Gestaltetes anfassen zu kÃ¶nnen.</div>
         </div>
         <div class="project-thumb"
           data-cat="Print"
           data-title="Druckpublikationen"
-          data-desc-full="Ein Glück für mich, dass Printmedien trotz der Digitalisierung nie ganz verschwunden sind – Mein erster realistischer Berufswunsch war Mediendesignerin. Ich liebe es, am Ende etwas Greifbares in den Händen zu halten. Es hat einfach etwas Besonderes, ein Projekt nicht nur auf dem Bildschirm zu sehen, sondern als echtes Produkt vor sich zu haben.&#10;In den vergangenen Jahren durfte ich die unterschiedlichsten Druckprodukte gestalten, für den Druck vorbereiten und bis zur Produktion begleiten. Dazu gehörten unter anderem Messestände, Flyer, Visitenkarten, Broschüren, Magazine, Stickerbögen, Goodies, Flaschen und viele weitere Formate. Jedes Medium bringt eigene Anforderungen mit sich – von Material und Format bis hin zu Farbprofilen und Druckverfahren.&#10;Besonders spannend finde ich dabei den Moment, wenn aus einer digitalen Datei ein reales Objekt wird. Zu sehen, wie aus einer Idee etwas entsteht, das Menschen anfassen, mitnehmen oder sogar über Jahre hinweg nutzen können, macht für mich nach wie vor einen großen Teil der Faszination von Gestaltung aus."
+          data-desc-full="Ein GlÃ¼ck fÃ¼r mich, dass Printmedien trotz der Digitalisierung nie ganz verschwunden sind â€“ Mein erster realistischer Berufswunsch war Mediendesignerin. Ich liebe es, am Ende etwas Greifbares in den HÃ¤nden zu halten. Es hat einfach etwas Besonderes, ein Projekt nicht nur auf dem Bildschirm zu sehen, sondern als echtes Produkt vor sich zu haben.&#10;In den vergangenen Jahren durfte ich die unterschiedlichsten Druckprodukte gestalten, fÃ¼r den Druck vorbereiten und bis zur Produktion begleiten. Dazu gehÃ¶rten unter anderem MessestÃ¤nde, Flyer, Visitenkarten, BroschÃ¼ren, Magazine, StickerbÃ¶gen, Goodies, Flaschen und viele weitere Formate. Jedes Medium bringt eigene Anforderungen mit sich â€“ von Material und Format bis hin zu Farbprofilen und Druckverfahren.&#10;Besonders spannend finde ich dabei den Moment, wenn aus einer digitalen Datei ein reales Objekt wird. Zu sehen, wie aus einer Idee etwas entsteht, das Menschen anfassen, mitnehmen oder sogar Ã¼ber Jahre hinweg nutzen kÃ¶nnen, macht fÃ¼r mich nach wie vor einen groÃŸen Teil der Faszination von Gestaltung aus."
           data-img="Bilder/print-magazine-01.jpg"
           data-en-cat="Print"
           data-en-title="Print Publications"
-          data-en-desc-full="Various print projects from stickers to magazines and exhibition walls. I enjoy seeing a designed object in the real world."
+          data-en-desc-full="Luckily for me, print media never completely disappeared despite digitalization â€” my first realistic career aspiration was media designer. I love having something tangible in my hands at the end. There is something special about not just seeing a project on a screen, but holding a real object. In recent years I have designed a wide variety of print products and accompanied them to production. These included exhibition stands, flyers, business cards, brochures, magazines, sticker sheets, goodies, bottles and many other formats. Every medium brings its own requirements â€” from material and format to color profiles and printing processes. What I find particularly exciting is the moment when a digital file becomes a real object. Seeing an idea become something people can touch, take with them, or even use for years is still a big part of the fascination of design for me."
           data-gallery="row:3|Bilder/print-magazine-07.jpg, Bilder/print-magazine-06.jpg, Bilder/print-magazine-05.jpg|row:3|Bilder/print-magazine-04.jpg, Bilder/print-magazine-03.jpg, Bilder/print-magazine-02.jpg|row:1|Bilder/print-whitepaper.png|row:2|Bilder/print-legends-vorschau.png, Bilder/print-legends-foto.png|row:2|Bilder/print-ecs-vorschau.png, Bilder/print-ecs-foto.png|row:2|Bilder/print-partnermesse-vorschau.png, Bilder/print-partnermesse-foto.png|row:2|Bilder/print-bottle-vorschau.png, Bilder/print-bottle-foto.png|row:2|Bilder/print-stickerboegen.png, Bilder/print-sticker-strategie.png">
           <img src="Bilder/print-magazine-01.jpg" class="thumb-img" alt="Druckpublikationen">
-          <span class="zoom-hint">Vergrößern ↗</span>
+          <span class="zoom-hint">VergrÃ¶ÃŸern â†—</span>
         </div>
       </div>
 
@@ -609,19 +151,19 @@
         <div class="project-info">
           <div class="project-cat" data-i18n="proj4_cat">Soziales Engagement</div>
           <div class="project-title" data-i18n="proj4_title">Mutismus Selbsthilfe Deutschland e.V.</div>
-          <div class="project-desc" data-i18n="proj4_desc">Hier unterstütze ich in der Kommunikation durch Grafiken und als Setzerin für Prints wie Broschüren und Messewände.</div>
+          <div class="project-desc" data-i18n="proj4_desc">Hier unterstÃ¼tze ich in der Kommunikation durch Grafiken und als Setzerin fÃ¼r Prints wie BroschÃ¼ren und MessewÃ¤nde.</div>
         </div>
         <div class="project-thumb"
           data-cat="Soziales Engagement"
           data-title="Mutismus Selbsthilfe Deutschland e.V."
-          data-desc-full="Mutismus ist eine Kommunikationsstörung, bei der betroffene Menschen in bestimmten Situationen oder gegenüber bestimmten Personen nicht sprechen können, obwohl sie körperlich dazu in der Lage wären. Der Mutismus Selbsthilfe Deutschland e. V. setzt sich dafür ein, Betroffene und Angehörige zu informieren, zu vernetzen und das Bewusstsein für das Thema in der Öffentlichkeit zu stärken.&#10;Seit 2024 unterstütze ich den Verein ehrenamtlich in der visuellen Kommunikation. Dazu gehören Illustrationen für den Webauftrittebenso wie die Gestaltung und der Satz von Broschüren, Roll-ups und weiteren Materialien für Veranstaltungen und Informationsangebote.&#10;Besonders wichtig war dabei, an bereits bestehende Gestaltungselemente anzuknüpfen. Statt einen völlig neuen Stil einzuführen, habe ich vorhandene Grafiken und Illustrationen aufgegriffen und weitergeführt, sodass neue Materialien sich nahtlos in das bestehende Erscheinungsbild des Vereins einfügen.&#10;Bei der abgebildeten Broschüre war ich als Setzerin tätig. Sie ist für Kinderarztpraxen gedacht und liegt dort als Information aus."
+          data-desc-full="Mutismus ist eine KommunikationsstÃ¶rung, bei der betroffene Menschen in bestimmten Situationen oder gegenÃ¼ber bestimmten Personen nicht sprechen kÃ¶nnen, obwohl sie kÃ¶rperlich dazu in der Lage wÃ¤ren. Der Mutismus Selbsthilfe Deutschland e. V. setzt sich dafÃ¼r ein, Betroffene und AngehÃ¶rige zu informieren, zu vernetzen und das Bewusstsein fÃ¼r das Thema in der Ã–ffentlichkeit zu stÃ¤rken.&#10;Seit 2024 unterstÃ¼tze ich den Verein ehrenamtlich in der visuellen Kommunikation. Dazu gehÃ¶ren Illustrationen fÃ¼r den Webauftrittebenso wie die Gestaltung und der Satz von BroschÃ¼ren, Roll-ups und weiteren Materialien fÃ¼r Veranstaltungen und Informationsangebote.&#10;Besonders wichtig war dabei, an bereits bestehende Gestaltungselemente anzuknÃ¼pfen. Statt einen vÃ¶llig neuen Stil einzufÃ¼hren, habe ich vorhandene Grafiken und Illustrationen aufgegriffen und weitergefÃ¼hrt, sodass neue Materialien sich nahtlos in das bestehende Erscheinungsbild des Vereins einfÃ¼gen.&#10;Bei der abgebildeten BroschÃ¼re war ich als Setzerin tÃ¤tig. Sie ist fÃ¼r Kinderarztpraxen gedacht und liegt dort als Information aus."
           data-img="Bilder/mutismus-01.jpg"
           data-en-cat="Social Engagement"
           data-en-title="Mutism Self-Help Germany"
-          data-en-desc-full="I support communication through graphics and layout for printed materials such as brochures and exhibition displays for a self-help organization."
+          data-en-desc-full="Mutism is a communication disorder in which affected people cannot speak in certain situations or with certain people, even though they are physically able to do so. Mutism Self-Help Germany e.V. works to inform and connect those affected and their relatives, and to raise awareness of the issue in public. Since 2024 I have been supporting the association voluntarily in visual communication. This includes illustrations for the website as well as the design and typesetting of brochures, roll-ups and other materials for events and information offerings. It was particularly important to build on existing design elements. Rather than introducing a completely new style, I took up existing graphics and continued them so that new materials fit seamlessly into the associationâ€™s existing visual identity. The brochure shown here was created as a typesetting project. It is intended for pediatric practices and is distributed there as informational material."
           data-gallery="row:2|Bilder/mutismus-02.png, Bilder/mutismus-03.png|row:1|Bilder/mutismus-04.png">
           <img src="Bilder/mutismus-01.jpg" class="thumb-img" alt="Mutismus Selbsthilfe">
-          <span class="zoom-hint">Vergrößern ↗</span>
+          <span class="zoom-hint">VergrÃ¶ÃŸern â†—</span>
         </div>
       </div>
 
@@ -630,38 +172,25 @@
         <div class="project-info">
           <div class="project-cat" data-i18n="proj5_cat">Miscellaneous</div>
           <div class="project-title" data-i18n="proj5_title">Dies und Das aus dem Studium</div>
-          <div class="project-desc" data-i18n="proj5_desc">Auch wenn es schon länger als fünf Jahre her ist, möchte ich hier trotzdem Projekte aus meiner Studienzeit zeigen, auf die ich heute noch ein bisschen Stolz bin.</div>
+          <div class="project-desc" data-i18n="proj5_desc">Auch wenn es schon lÃ¤nger als fÃ¼nf Jahre her ist, mÃ¶chte ich hier trotzdem Projekte aus meiner Studienzeit zeigen, auf die ich heute noch ein bisschen Stolz bin.</div>
         </div>
         <div class="project-thumb"
           data-cat="Miscellaneous"
           data-title="Dies und Das aus dem Studium"
-          data-desc-full="Das erste Projekt wäre wäre die Chore Alarm App aus einem iOS App Development Kurs. Dabei habe ich mit einem Komillitonen zusammen eine App entwickelt, die die Nutzenden an ihre täglichen Aufgaben zuhause erinnern soll – Blumen gießen, Bad putzen, Müll rausbringen. Hier habe ich nicht nur die Grafiken und die Oberfläche gestaltet, sondern auch die App an sich in Swift UI programmiert.&#10;Das zweite Projekt zeigt Grafiken aus einem interdisziplinären Semesterprojekt mit dem Schwerpunkt Game Design. Hier bin ich das erste Mal mit Adobe After Effects und SVG-Animationen in Berührung gekommen und habe mich direkt verliebt. Auch wenn am Ende wegen Komplikationen kein echtes Spiel entstanden ist, gab es wenige Projekte im Studium, bei denen ich so viel gelernt habe.&#10;Anschließend das letzte Projekt: Ein Instagram-Account, auf dem ich und eine Freundin während dem Studium etwas tiefer in die Welt des Social Media eintauchen wollten. Wir haben individuell angefertigte Comic-Illustrationen von Menschen in ihren gewünschten Comic-Stilen erstellt. Hier habe ich einen kleinen Einblick in unseren Styleguide."
+          data-desc-full="Das erste Projekt wÃ¤re wÃ¤re die Chore Alarm App aus einem iOS App Development Kurs. Dabei habe ich mit einem Komillitonen zusammen eine App entwickelt, die die Nutzenden an ihre tÃ¤glichen Aufgaben zuhause erinnern soll â€“ Blumen gieÃŸen, Bad putzen, MÃ¼ll rausbringen. Hier habe ich nicht nur die Grafiken und die OberflÃ¤che gestaltet, sondern auch die App an sich in Swift UI programmiert.&#10;Das zweite Projekt zeigt Grafiken aus einem interdisziplinÃ¤ren Semesterprojekt mit dem Schwerpunkt Game Design. Hier bin ich das erste Mal mit Adobe After Effects und SVG-Animationen in BerÃ¼hrung gekommen und habe mich direkt verliebt. Auch wenn am Ende wegen Komplikationen kein echtes Spiel entstanden ist, gab es wenige Projekte im Studium, bei denen ich so viel gelernt habe.&#10;AnschlieÃŸend das letzte Projekt: Ein Instagram-Account, auf dem ich und eine Freundin wÃ¤hrend dem Studium etwas tiefer in die Welt des Social Media eintauchen wollten. Wir haben individuell angefertigte Comic-Illustrationen von Menschen in ihren gewÃ¼nschten Comic-Stilen erstellt. Hier habe ich einen kleinen Einblick in unseren Styleguide."
           data-img="Bilder/sonstiges-chore.jpg"
           data-en-cat="Miscellaneous"
           data-en-title="Bits and Pieces from University"
-          data-en-desc-full="A selection of student projects, including app concepts and interdisciplinary work, showing early experiments and learning moments."
+          data-en-desc-full="The first project is the Chore Alarm app from an iOS app development course. Together with a fellow student I developed an app that reminds users of daily household tasks â€” watering plants, cleaning the bathroom, taking out the trash. I not only designed the graphics and interface, but also programmed the app itself in SwiftUI. The second project shows graphics from an interdisciplinary semester project with a focus on game design. For the first time I worked with Adobe After Effects and SVG animations, and I immediately fell in love with them. Although no real game was created in the end due to complications, this project was one of the experiences from my studies where I learned the most. Finally, a student Instagram account where a friend and I explored the world of social media. We created custom comic illustrations of people in their desired styles. Here you can see a small insight into our style guide."
           data-gallery="row:2|Bilder/sonstiges-forever.jpg, Bilder/sonstiges-toons.jpg">
           <img src="Bilder/sonstiges-chore.jpg" class="thumb-img" alt="Dies und Das aus dem Studium">
-          <span class="zoom-hint">Vergrößern ↗</span>
+          <span class="zoom-hint">VergrÃ¶ÃŸern â†—</span>
         </div>
       </div>
   </section>
 
   <!-- SKILLS -->
-  <section id="skills" style="background: #fff; display: flex; flex-direction: column; align-items: center; padding: 3rem 1rem; font-family: 'DM Sans', sans-serif; min-height: 100vh;">
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Fraunces:ital,wght@0,600;1,300&display=swap');
-      @keyframes wordFloat {
-        0%,100% { transform: translate(-50%,-50%) translateY(0px); }
-        50%      { transform: translate(-50%,-50%) translateY(-5px); }
-      }
-      @keyframes blobFloat {
-        0%,100% { border-radius: 60% 40% 55% 45% / 50% 55% 45% 50%; transform: translate(-50%,-50%) translateY(0); }
-        33%      { border-radius: 45% 55% 40% 60% / 55% 45% 55% 45%; transform: translate(-50%,-50%) translateY(-8px); }
-        66%      { border-radius: 55% 45% 60% 40% / 45% 60% 40% 55%; transform: translate(-50%,-50%) translateY(5px); }
-      }
-    </style>
-
+  <section id="skills">
     <div class="portfolio-header reveal" style="width: 100%; max-width: 900px; text-align: left; margin-bottom: 2.5rem;">
       <div>
         <p class="section-label" data-i18n="skills_label">Was ich mitbringe</p>
@@ -669,7 +198,7 @@
       </div>
     </div>
 
-    <div style="position: relative; width: 100%; max-width: 680px; aspect-ratio: 1 / 1.1;">
+<div class="skills-canvas">
 
       <!-- Schnure - ganz hinten -->
       <svg style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;" viewBox="0 0 680 748" fill="none">
@@ -714,11 +243,11 @@
         <div style="position: absolute; left: 66%; top: 56%; width: 22%; height: 16%; transform: translate(-50%, -50%); background: #f7e6a2; opacity: 0.75; border-radius: 60% 40% 55% 45% / 50% 55% 45% 50%; animation: blobFloat 11s ease-in-out -5s infinite;"></div>
       </div>
 
-      <!-- Wörter -->
+      <!-- WÃ¶rter -->
       <div style="position: absolute; inset: 0; z-index: 3;">
         <span style="position: absolute; left: 52%; top: 30%; transform: translate(-50%, -50%); font-size: 0.82rem; font-weight: 500; color: #2a2320; white-space: nowrap; pointer-events: none; animation: wordFloat 6s ease-in-out 0s infinite;">Illustrieren</span>
         <span style="position: absolute; left: 37%; top: 35%; transform: translate(-50%, -50%); font-size: 0.82rem; font-weight: 500; color: #2a2320; white-space: nowrap; pointer-events: none; animation: wordFloat 6.7s ease-in-out -1.3s infinite;">HTML & CSS</span>
-        <span style="position: absolute; left: 63%; top: 32%; transform: translate(-50%, -50%); font-size: 0.82rem; font-weight: 500; color: #2a2320; white-space: nowrap; pointer-events: none; animation: wordFloat 7.4s ease-in-out -2.6s infinite;">Kreativität</span>
+        <span style="position: absolute; left: 63%; top: 32%; transform: translate(-50%, -50%); font-size: 0.82rem; font-weight: 500; color: #2a2320; white-space: nowrap; pointer-events: none; animation: wordFloat 7.4s ease-in-out -2.6s infinite;">KreativitÃ¤t</span>
         <span style="position: absolute; left: 41%; top: 46%; transform: translate(-50%, -50%); font-size: 0.82rem; font-weight: 500; color: #2a2320; white-space: nowrap; pointer-events: none; animation: wordFloat 8.1s ease-in-out -3.9s infinite;">Adobe Photoshop</span>
         <span style="position: absolute; left: 64%; top: 48%; transform: translate(-50%, -50%); font-size: 0.82rem; font-weight: 500; color: #2a2320; white-space: nowrap; pointer-events: none; animation: wordFloat 6s ease-in-out -5.2s infinite;">Design</span>
         <span style="position: absolute; left: 48%; top: 20%; transform: translate(-50%, -50%); font-size: 0.82rem; font-weight: 500; color: #2a2320; white-space: nowrap; pointer-events: none; animation: wordFloat 6.7s ease-in-out -6.5s infinite;">Claude AI</span>
@@ -728,13 +257,13 @@
         <span style="position: absolute; left: 74%; top: 38%; transform: translate(-50%, -50%); font-size: 0.82rem; font-weight: 500; color: #2a2320; white-space: nowrap; pointer-events: none; animation: wordFloat 6.7s ease-in-out -3.9s infinite;">Typesetting</span>
         <span style="position: absolute; left: 28%; top: 51%; transform: translate(-50%, -50%); font-size: 0.82rem; font-weight: 500; color: #2a2320; white-space: nowrap; pointer-events: none; animation: wordFloat 7.4s ease-in-out -5.2s infinite;">Firefly AI</span>
         <span style="position: absolute; left: 70%; top: 52%; transform: translate(-50%, -50%); font-size: 0.82rem; font-weight: 500; color: #2a2320; white-space: nowrap; pointer-events: none; animation: wordFloat 8.1s ease-in-out -6.5s infinite;">Adobe After Effects</span>
-        <span style="position: absolute; left: 53%; top: 58%; transform: translate(-50%, -50%); font-size: 0.82rem; font-weight: 500; color: #2a2320; white-space: nowrap; pointer-events: none; animation: wordFloat 6s ease-in-out 0s infinite;">Problemlösungen</span>
+        <span style="position: absolute; left: 53%; top: 58%; transform: translate(-50%, -50%); font-size: 0.82rem; font-weight: 500; color: #2a2320; white-space: nowrap; pointer-events: none; animation: wordFloat 6s ease-in-out 0s infinite;">ProblemlÃ¶sungen</span>
         <span style="position: absolute; left: 49%; top: 14%; transform: translate(-50%, -50%); font-size: 0.82rem; font-weight: 500; color: #2a2320; white-space: nowrap; pointer-events: none; animation: wordFloat 6.7s ease-in-out -1.3s infinite;">HeyGen AI</span>
         <span style="position: absolute; left: 30%; top: 16%; transform: translate(-50%, -50%); font-size: 0.82rem; font-weight: 500; color: #2a2320; white-space: nowrap; pointer-events: none; animation: wordFloat 7.4s ease-in-out -2.6s infinite;">Adobe InDesign</span>
         <span style="position: absolute; left: 69%; top: 17%; transform: translate(-50%, -50%); font-size: 0.82rem; font-weight: 500; color: #2a2320; white-space: nowrap; pointer-events: none; animation: wordFloat 8.1s ease-in-out -3.9s infinite;">ChatGPT AI</span>
         <span style="position: absolute; left: 20%; top: 29%; transform: translate(-50%, -50%); font-size: 0.82rem; font-weight: 500; color: #2a2320; white-space: nowrap; pointer-events: none; animation: wordFloat 6s ease-in-out -5.2s infinite;">Durchblick</span>
         <span style="position: absolute; left: 79%; top: 31%; transform: translate(-50%, -50%); font-size: 0.82rem; font-weight: 500; color: #2a2320; white-space: nowrap; pointer-events: none; animation: wordFloat 6.7s ease-in-out -6.5s infinite;">DE Muttersprache</span>
-        <span style="position: absolute; left: 47%; top: 63%; transform: translate(-50%, -50%); font-size: 0.82rem; font-weight: 500; color: #2a2320; white-space: nowrap; pointer-events: none; animation: wordFloat 7.4s ease-in-out 0s infinite;">EN fließend</span>
+        <span style="position: absolute; left: 47%; top: 63%; transform: translate(-50%, -50%); font-size: 0.82rem; font-weight: 500; color: #2a2320; white-space: nowrap; pointer-events: none; animation: wordFloat 7.4s ease-in-out 0s infinite;">EN flieÃŸend</span>
       </div>
 
     </div>
@@ -745,7 +274,7 @@
     <div class="contact-inner">
       <div class="contact-heading">
         <p class="section-label" data-i18n="contact_label">Sag Hallo</p>
-        <h2 data-i18n="contact_h2">Lass uns etwas<br><em style="font-family:Fraunces,serif;font-weight:300;font-style:italic">Schönes bauen.</em></h2>
+        <h2 data-i18n="contact_h2">Lass uns etwas<br><em style="font-family:Fraunces,serif;font-weight:300;font-style:italic">SchÃ¶nes bauen.</em></h2>
       </div>
       <div class="contact-details">
         <div class="contact-detail-block">
@@ -758,7 +287,7 @@
         </div>
         <div class="contact-detail-block">
           <div class="contact-detail-label" data-i18n="contact_address">Adresse</div>
-          <div class="contact-detail-value">Rosensteinstraße 29<br>70191 Stuttgart</div>
+          <div class="contact-detail-value">RosensteinstraÃŸe 29<br>70191 Stuttgart</div>
         </div>
         <div class="contact-detail-block">
           <div class="contact-detail-label" data-i18n="contact_online">Online</div>
@@ -772,19 +301,19 @@
   </section>
 
   <footer>
-    <p data-i18n="footer_text">© 2026 Miriam Frommer · Mit ♡ und Claude AI gestaltet · Alle Rechte vorbehalten.</p>
+    <p data-i18n="footer_text">Â© 2026 Miriam Frommer Â· Mit â™¡ und Claude AI gestaltet Â· Alle Rechte vorbehalten.</p>
   </footer>
 
   <!-- LIGHTBOX -->
   <div id="lightbox">
     <div id="lightbox-backdrop"></div>
     <div id="lightbox-box">
-      <button id="lightbox-close">✕</button>
+      <button id="lightbox-close">âœ•</button>
       <div id="lightbox-thumb"></div>
       <div id="lightbox-panorama">
         <div id="panorama-viewer"></div>
       </div>
-      <p class="panorama-hint" id="panorama-hint" style="display:none" data-i18n="panorama_hint">🖱 Ziehen zum Umsehen · Scrollen zum Zoomen</p>
+      <p class="panorama-hint" id="panorama-hint" style="display:none" data-i18n="panorama_hint">ðŸ–± Ziehen zum Umsehen Â· Scrollen zum Zoomen</p>
       <div id="lightbox-info">
         <div id="lightbox-cat"></div>
         <div id="lightbox-title"></div>
@@ -794,270 +323,6 @@
     </div>
   </div>
 
-  <script>
-    // ─── Custom Cursor ───
-    const cursor = document.getElementById('cursor');
-    const trail  = document.getElementById('cursor-trail');
-    let mx = 0, my = 0, tx = 0, ty = 0;
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
-    });
-    setInterval(() => {
-      tx += (mx - tx) * 1;
-      ty += (my - ty) * 1;
-      trail.style.transform = `translate(${tx - 16}px, ${ty - 16}px)`;
-    }, 16);
-    document.querySelectorAll('a, button').forEach(el => {
-      el.addEventListener('mouseenter', () => { cursor.style.transform += ' scale(1.8)'; cursor.style.background = '#d4c5e8'; });
-      el.addEventListener('mouseleave', () => { cursor.style.background = 'var(--blush)'; });
-    });
-
-    // ─── Smooth Scroll ohne Hash in URL ───
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        const target = document.querySelector(link.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-
-    // ─── Scroll Reveal ───
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          e.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
-            bar.style.width = bar.dataset.width;
-          });
-        }
-      });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    // ─── Lightbox ───
-    const lightbox   = document.getElementById('lightbox');
-    const lbThumb    = document.getElementById('lightbox-thumb');
-    const lbPanorama = document.getElementById('lightbox-panorama');
-    const lbHint     = document.getElementById('panorama-hint');
-    const lbCat      = document.getElementById('lightbox-cat');
-    const lbTitle    = document.getElementById('lightbox-title');
-    const lbDesc     = document.getElementById('lightbox-desc');
-    const lbClose    = document.getElementById('lightbox-close');
-    const lbBackdrop = document.getElementById('lightbox-backdrop');
-    let pannellumViewer = null;
-
-    // Galerie-Parser: "row:3|Bild1,Bild2,Bild3|row:1|Bild4|pano:360.jpg"
-    let galleryPanoCounter = 0;
-    function buildGallery(galleryData) {
-      const gallery = document.getElementById('lightbox-gallery');
-      gallery.innerHTML = '';
-      if (!galleryData) return;
-
-      const segments = galleryData.split('|');
-      let currentCols = 3;
-      let i = 0;
-      while (i < segments.length) {
-        const seg = segments[i].trim();
-        if (seg.startsWith('row:')) {
-          currentCols = parseInt(seg.replace('row:', '')) || 3;
-          i++;
-          } else if (seg.startsWith('text:')) {
-  const text = seg.replace('text:', '').trim();
-  const p = document.createElement('p');
-  p.className = 'gallery-text';
-  p.textContent = text;
-  gallery.appendChild(p);
-  i++;
-        } else if (seg.startsWith('pano:')) {
-          const src = seg.replace('pano:', '').trim();
-          const viewerId = 'gallery-pano-' + (galleryPanoCounter++);
-          const wrapper = document.createElement('div');
-          wrapper.className = 'gallery-panorama-row';
-          wrapper.id = viewerId;
-          gallery.appendChild(wrapper);
-          const hint = document.createElement('p');
-          hint.className = 'gallery-panorama-hint';
-          // use current document language to pick hint text
-          try {
-            const langNow = (document.documentElement.lang && document.documentElement.lang.startsWith('en')) ? 'en' : 'de';
-            hint.textContent = translations.panorama_hint ? translations.panorama_hint[langNow] : '🖱 Ziehen zum Umsehen · Scrollen zum Zoomen';
-          } catch(e) {
-            hint.textContent = '🖱 Ziehen zum Umsehen · Scrollen zum Zoomen';
-          }
-          gallery.appendChild(hint);
-          setTimeout(() => {
-            pannellum.viewer(viewerId, {
-              type: 'equirectangular',
-              panorama: src,
-              autoLoad: true,
-              autoRotate: -2,
-              compass: false,
-              showControls: true,
-              mouseZoom: true,
-            });
-          }, 150);
-          i++;
-        } else {
-          const images = seg.split(',').map(s => s.trim()).filter(Boolean);
-          if (images.length) {
-            const row = document.createElement('div');
-            row.className = `gallery-row cols-${currentCols}`;
-            images.forEach(src => {
-              const img = document.createElement('img');
-              img.src = src;
-              img.alt = '';
-              row.appendChild(img);
-            });
-            gallery.appendChild(row);
-          }
-          i++;
-        }
-      }
-    }
-
-    document.querySelectorAll('.project-thumb').forEach(thumb => {
-      thumb.addEventListener('click', () => {
-        const panoramaSrc = thumb.dataset.panorama;
-
-        if (panoramaSrc) {
-          lbThumb.style.display = 'none';
-          lbPanorama.classList.add('active');
-          lbHint.style.display = 'flex';
-          if (pannellumViewer) { pannellumViewer.destroy(); }
-          pannellumViewer = pannellum.viewer('panorama-viewer', {
-            type: 'equirectangular',
-            panorama: panoramaSrc,
-            autoLoad: true,
-            autoRotate: -2,
-            compass: false,
-            showControls: true,
-            mouseZoom: true,
-          });
-        } else {
-          lbThumb.style.display = 'flex';
-          lbThumb.innerHTML = `<img src="${thumb.dataset.img}" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:12px;">`;
-          lbPanorama.classList.remove('active');
-          lbHint.style.display = 'none';
-        }
-
-        lbCat.textContent   = thumb.dataset.cat;
-        lbTitle.textContent = thumb.dataset.title;
-        const rawText = thumb.dataset.descFull || thumb.dataset.desc || '';
-lbDesc.innerHTML = rawText
-  .split('\n')
-  .filter(line => line.trim() !== '')
-  .map(line => `<p>${line}</p>`)
-  .join('');
-
-        buildGallery(thumb.dataset.gallery);
-
-        lightbox.classList.add('open');
-        document.body.style.overflow = 'hidden';
-      });
-    });
-
-    function closeLightbox() {
-      lightbox.classList.remove('open');
-      document.body.style.overflow = '';
-      if (pannellumViewer) { pannellumViewer.destroy(); pannellumViewer = null; }
-      lbPanorama.classList.remove('active');
-      lbHint.style.display = 'none';
-      lbThumb.style.display = 'flex';
-    }
-    lbClose.addEventListener('click', closeLightbox);
-    lbBackdrop.addEventListener('click', closeLightbox);
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
-
-    // ─── Language Toggle (DE / EN) ───
-    const langToggle = document.getElementById('lang-toggle');
-    const translations = {
-      hero_h1: { de: 'Design,\ndas vermittelt.', en: 'Design,\nthat communicates.' },
-      hero_sub: { de: 'Ich bin eine Designerin & Illustratorin mit einer Leidenschaft für E‑Learning, Character Design und visuelle Konzepte, die wirken.', en: 'I am a designer & illustrator passionate about e‑learning, character design and visual concepts that work.' },
-      cta_portfolio: { de: 'Meine Arbeiten →', en: 'My Work →' },
-      about_label: { de: 'Über mich', en: 'About' },
-      about_p1: { de: 'Ich bringe Ideen visuell zum Leben – von verspielten Charakteren bis hin zu durchdachten Lernkonzepten. Meine Arbeit verbindet Ästhetik mit Funktion.', en: 'I bring ideas to life visually — from playful characters to well-considered learning concepts. My work combines aesthetics with function.' },
-      about_p2: { de: 'Mit Erfahrung in Grafik, Illustration und Instructional Design helfe ich Unternehmen und Kreativen, ihre Geschichten auf einzigartige Weise zu erzählen.', en: 'With experience in graphic design, illustration and instructional design, I help companies and creatives tell their stories in unique ways.' },
-      portfolio_label: { de: 'Ausgewählte Arbeiten', en: 'Selected Works' },
-      portfolio_h2: { de: 'Projekte', en: 'Projects' },
-      proj1_cat: { de: 'Instructional Design', en: 'Instructional Design' },
-      proj1_title: { de: 'Screendesigns', en: 'Screen Designs' },
-      proj1_desc: { de: 'E-Learning Screendesigns für Firmen und Themen aller Art. Ein kurzer Überblick über meine beruflichen Schwerpunkte der letzten Jahre.', en: 'E-learning screen designs for companies and various topics. A brief overview of my main focuses in recent years.' },
-      proj2_cat: { de: 'Illustrationen', en: 'Illustrations' },
-      proj2_title: { de: 'Character Design und Fanart', en: 'Character Design & Fan Art' },
-      proj2_desc: { de: 'Ob im E-Learning-Kontext oder privat ist egal – Charaktere gestalten macht immer Spaß. Vom Menschen über Tiere bis zum Koffer ist alles dabei.', en: 'Whether in e-learning or private projects — designing characters is always fun. From people to animals and even inanimate objects.' },
-      proj3_cat: { de: 'Print', en: 'Print' },
-      proj3_title: { de: 'Druckpublikationen', en: 'Print Publications' },
-      proj3_desc: { de: 'Ein paar klebrige Sticker, ein frisch gedrucktes Magazin, oder eine drei Meter hohe Messewand – Einfach schön, etwas Gestaltetes anfassen zu können.', en: 'Sticky stickers, a freshly printed magazine, or a three-meter exhibition wall — it’s lovely to hold a designed object in your hands.' },
-      proj4_cat: { de: 'Soziales Engagement', en: 'Social Engagement' },
-      proj4_title: { de: 'Mutismus Selbsthilfe Deutschland e.V.', en: 'Mutism Self-Help Germany' },
-      proj4_desc: { de: 'Hier unterstütze ich in der Kommunikation durch Grafiken und als Setzerin für Prints wie Broschüren und Messewände.', en: 'I support communication through graphics and layout for printed materials like brochures and exhibition displays.' },
-      proj5_cat: { de: 'Miscellaneous', en: 'Miscellaneous' },
-      proj5_title: { de: 'Dies und Das aus dem Studium', en: 'Bits and Pieces from University' },
-      proj5_desc: { de: 'Auch wenn es schon länger als fünf Jahre her ist, möchte ich hier trotzdem Projekte aus meiner Studienzeit zeigen, auf die ich heute noch ein bisschen Stolz bin.', en: 'Even though it’s been more than five years, I still want to show some university projects I’m proud of.' },
-      skills_label: { de: 'Was ich mitbringe', en: 'What I Bring' },
-      skills_h2: { de: 'Skills & Tools', en: 'Skills & Tools' },
-      contact_label: { de: 'Sag Hallo', en: 'Say Hello' },
-      contact_h2: { de: 'Lass uns etwas\nSchönes bauen.', en: 'Let’s build something\nbeautiful.' },
-      contact_email: { de: 'E-Mail', en: 'Email' },
-      contact_phone: { de: 'Telefon', en: 'Phone' },
-      contact_address: { de: 'Adresse', en: 'Address' },
-      contact_online: { de: 'Online', en: 'Online' },
-      footer_text: { de: '© 2026 Miriam Frommer · Mit ♡ und Claude AI gestaltet · Alle Rechte vorbehalten.', en: '© 2026 Miriam Frommer · Designed with ♡ and AI · All rights reserved.' }
-    };
-
-    function applyLang(lang) {
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.dataset.i18n;
-        const dict = translations[key];
-        if (dict && dict[lang]) {
-          // preserve simple HTML structure for headings with <br>
-          if (el.tagName.toLowerCase() === 'h1' || el.tagName.toLowerCase() === 'h2') {
-            el.innerHTML = translations[key][lang].replace(/\n/g, '<br>');
-          } else {
-            el.textContent = translations[key][lang];
-          }
-        }
-      });
-
-      // update project thumbs' dataset values (lightbox)
-      document.querySelectorAll('.project-thumb').forEach(thumb => {
-        // store original german values if not present
-        if (!thumb.dataset.deCat) thumb.dataset.deCat = thumb.dataset.cat || '';
-        if (!thumb.dataset.deTitle) thumb.dataset.deTitle = thumb.dataset.title || '';
-        if (!thumb.dataset.deDescFull) thumb.dataset.deDescFull = thumb.dataset.descFull || thumb.dataset.desc || '';
-
-        const useSuffix = (lang === 'de') ? 'de' : 'en';
-        // cat
-        const catKey = useSuffix + 'Cat';
-        if (thumb.dataset[catKey]) thumb.dataset.cat = thumb.dataset[catKey];
-        // title
-        const titleKey = useSuffix + 'Title';
-        if (thumb.dataset[titleKey]) thumb.dataset.title = thumb.dataset[titleKey];
-        // descFull
-        const descKey = useSuffix + 'DescFull';
-        if (thumb.dataset[descKey]) thumb.dataset.descFull = thumb.dataset[descKey];
-      });
-
-      if (langToggle) langToggle.textContent = (lang === 'de') ? 'EN' : 'DE';
-      try { localStorage.setItem('site-lang', lang); } catch (e) {}
-      document.documentElement.lang = (lang === 'de') ? 'de' : 'en';
-    }
-
-    if (langToggle) {
-      langToggle.addEventListener('click', () => {
-        const current = localStorage.getItem('site-lang') || 'de';
-        const next = (current === 'de') ? 'en' : 'de';
-        applyLang(next);
-      });
-    }
-
-    // initialize language from storage or browser preference
-    (function(){
-      const stored = localStorage.getItem('site-lang');
-      const navPref = (typeof navigator !== 'undefined' && navigator.language && navigator.language.startsWith('en')) ? 'en' : 'de';
-      applyLang(stored || navPref);
-    })();
-  </script>
+    <script src="js/scripts.js" defer></script>
 </body>
 </html>
