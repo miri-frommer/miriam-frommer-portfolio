@@ -52,7 +52,7 @@ body {
 
 /* ─── NAV ─── */
 nav {
-  position: fixed; top: 0; left: 0;
+  position: relative; top: auto; left: auto;
   width: 100%;
   z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
@@ -402,6 +402,24 @@ h2 {
 .skill-pill { background: white; border-radius: 100px; padding: 0.25rem 0.75rem; font-size: 0.76rem; color: var(--muted); }
 .skill-bar-wrap { margin-top: 0.8rem; }
 .skill-bar-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.82rem; }
+
+/* Blobs wrapper offset to fine-tune alignment (moves blobs slightly up/left) */
+.skills-canvas .blobs-wrapper {
+  transform: translate(-6%, -8%);
+}
+
+/* Word cloud styling */
+.skills-canvas .words span {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #2a2320;
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  .skills-canvas .blobs-wrapper { transform: translate(-8%, -12%); }
+  .skills-canvas .words span { font-size: 0.66rem !important; }
+}
 .skill-bar-bg { background: rgba(42,35,32,0.08); border-radius: 100px; height: 6px; margin-bottom: 0.8rem; overflow: hidden; }
 .skill-bar-fill { height: 100%; border-radius: 100px; background: var(--ink); transition: width 1s ease; }
 
@@ -453,8 +471,10 @@ footer {
   .gallery-row.cols-3 { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 600px) {
-  #hero { padding: 7rem 1.5rem 4rem; }
-  .nav-links { display: none; }
+      #hero { padding: 7rem 1.5rem 4rem; }
+      /* keep nav layout but hide all items except the language toggle on small screens */
+      .nav-links { display: flex; gap: 1rem; align-items: center; justify-content: flex-end; }
+      .nav-links li:not(.lang-item) { display: none; }
   .gallery-row.cols-2,
   .gallery-row.cols-3 { grid-template-columns: 1fr; }
 }

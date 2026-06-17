@@ -205,6 +205,25 @@ const translations = {
   skills_label: { de: 'Was ich mitbringe', en: 'What I Bring' },
   skills: { de: 'Skills', en: 'Skills' },
   skills_h2: { de: 'Skills & Tools', en: 'Skills & Tools' },
+  skills_word_1: { de: 'Illustrieren', en: 'Illustration' },
+  skills_word_2: { de: 'HTML & CSS', en: 'HTML & CSS' },
+  skills_word_3: { de: 'Kreativität', en: 'Creativity' },
+  skills_word_4: { de: 'Adobe Photoshop', en: 'Adobe Photoshop' },
+  skills_word_5: { de: 'Design', en: 'Design' },
+  skills_word_6: { de: 'Claude AI', en: 'Claude AI' },
+  skills_word_7: { de: 'Barrierefreiheit', en: 'Accessibility' },
+  skills_word_8: { de: 'Adobe Illustrator', en: 'Adobe Illustrator' },
+  skills_word_9: { de: 'Teamplay', en: 'Teamwork' },
+  skills_word_10: { de: 'Typesetting', en: 'Typesetting' },
+  skills_word_11: { de: 'Firefly AI', en: 'Firefly AI' },
+  skills_word_12: { de: 'Adobe After Effects', en: 'Adobe After Effects' },
+  skills_word_13: { de: 'Problemlösungen', en: 'Problem solving' },
+  skills_word_14: { de: 'HeyGen AI', en: 'HeyGen AI' },
+  skills_word_15: { de: 'Adobe InDesign', en: 'Adobe InDesign' },
+  skills_word_16: { de: 'ChatGPT AI', en: 'ChatGPT AI' },
+  skills_word_17: { de: 'Durchblick', en: 'Clarity' },
+  skills_word_18: { de: 'DE Muttersprache', en: 'Native German' },
+  skills_word_19: { de: 'EN fließend', en: 'Fluent English' },
   contact_label: { de: 'Sag Hallo', en: 'Say Hello' },
   contact: { de: 'Kontakt', en: 'Contact' },
   contact_h2: { de: 'Lass uns etwas\nSchönes bauen.', en: 'Let’s build something\nbeautiful.' },
@@ -259,8 +278,8 @@ if (langToggle) {
   });
 }
 
-(function() {
-  const stored = localStorage.getItem('site-lang');
-  const navPref = (typeof navigator !== 'undefined' && navigator.language && navigator.language.startsWith('en')) ? 'en' : 'de';
-  applyLang(stored || navPref);
-})();
+    (function() {
+      const stored = localStorage.getItem('site-lang');
+      // Default to German unless user explicitly chose otherwise
+      applyLang(stored || 'de');
+    })();
