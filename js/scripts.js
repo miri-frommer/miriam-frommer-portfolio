@@ -100,6 +100,22 @@ function buildGallery(galleryData) {
         });
       }, 150);
       i++;
+    } else if (seg.startsWith('video:')) {
+      const src = seg.replace('video:', '').trim();
+      const wrapper = document.createElement('div');
+      wrapper.className = 'gallery-video-row';
+      const video = document.createElement('video');
+      video.className = 'gallery-video';
+      video.controls = true;
+      video.preload = 'metadata';
+      video.playsInline = true;
+      const source = document.createElement('source');
+      source.src = src;
+      source.type = 'video/mp4';
+      video.appendChild(source);
+      wrapper.appendChild(video);
+      gallery.appendChild(wrapper);
+      i++;
     } else {
       const images = seg.split(',').map(s => s.trim()).filter(Boolean);
       if (images.length) {
@@ -120,9 +136,19 @@ function buildGallery(galleryData) {
 
 document.querySelectorAll('.project-thumb').forEach(thumb => {
   thumb.addEventListener('click', () => {
+    const videoSrc = thumb.dataset.video;
     const panoramaSrc = thumb.dataset.panorama;
 
-    if (panoramaSrc) {
+    if (videoSrc) {
+      lbThumb.style.display = 'flex';
+      lbThumb.innerHTML = `
+        <video controls preload="metadata" playsinline poster="${thumb.dataset.img || ''}" class="lightbox-video">
+          <source src="${videoSrc}" type="video/mp4">
+          Dein Browser unterstützt keine Videowiedergabe.
+        </video>`;
+      lbPanorama.classList.remove('active');
+      lbHint.style.display = 'none';
+    } else if (panoramaSrc) {
       lbThumb.style.display = 'none';
       lbPanorama.classList.add('active');
       lbHint.style.display = 'flex';
@@ -160,10 +186,30 @@ document.querySelectorAll('.project-thumb').forEach(thumb => {
   });
 });
 
+function stopActiveMedia() {
+  lightbox.querySelectorAll('video').forEach(video => {
+    try {
+      video.pause();
+      video.currentTime = 0;
+      if (video.removeAttribute) video.removeAttribute('src');
+      if (video.load) video.load();
+    } catch (e) {}
+  });
+
+  if (pannellumViewer) {
+    pannellumViewer.destroy();
+    pannellumViewer = null;
+  }
+
+  const gallery = document.getElementById('lightbox-gallery');
+  if (gallery) gallery.innerHTML = '';
+  lbThumb.innerHTML = '';
+}
+
 function closeLightbox() {
+  stopActiveMedia();
   lightbox.classList.remove('open');
   document.body.style.overflow = '';
-  if (pannellumViewer) { pannellumViewer.destroy(); pannellumViewer = null; }
   lbPanorama.classList.remove('active');
   lbHint.style.display = 'none';
   lbThumb.style.display = 'flex';
@@ -200,8 +246,8 @@ const translations = {
   proj4_title: { de: 'Mutismus Selbsthilfe Deutschland e.V.', en: 'Mutism Self-Help Germany' },
   proj4_desc: { de: 'Hier unterstütze ich in der Kommunikation durch Grafiken und als Setzerin für Prints wie Broschüren und Messewände.', en: 'I support communication through graphics and layout for printed materials like brochures and exhibition displays.' },
   proj5_cat: { de: 'Bewegtbild', en: 'Moving Images' },
-  proj5_title: { de: 'Social Media & Motion Design', en: 'Social Media & Motion Design' },
-  proj5_desc: { de: 'Von animierten Social-Media-Posts über Erklärvideos bis zu KI-generierten Sequenzen – digitale Bewegtbilder bringen Inhalte dynamisch zum Leben.', en: 'From animated social media posts to explainer videos to AI-generated sequences — moving images bring content to life dynamically.' },
+  proj5_title: { de: 'Animationen & Videos', en: 'Animations & Videos' },
+  proj5_desc: { de: 'Social Media Motion Designs und Erklärvideos in After Effects, Keyframe Animationen in Photoshop und KI-generierte Videos online und in Premiere: Das Thema Bewegtbild macht einfach Spaß und erweckt Inhalte zum Leben.', en: 'Social media motion graphics and educational videos in After Effects, keyframe animations in Photoshop, and AI-generated videos online and in Premiere: Working with moving images is just plain fun and brings content to life.' },
   proj6_cat: { de: 'Miscellaneous', en: 'Miscellaneous' },
   proj6_title: { de: 'Dies und Das aus dem Studium', en: 'Bits and Pieces from University' },
   proj6_desc: { de: 'Auch wenn es schon länger als fünf Jahre her ist, möchte ich hier trotzdem Projekte aus meiner Studienzeit zeigen, auf die ich heute noch ein bisschen Stolz bin.', en: 'Even though it’s been more than five years, I still want to show some university projects I’m proud of.' },
